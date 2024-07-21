@@ -1,0 +1,20 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<title>Fortune teller</title>
+</head>
+<body>
+
+	<h1>Thank you for your quote</h1>
+	<h1>{{quote}}</h1>
+	<form action="{{url_for('display')}}" method = "GET">
+		<input type="submit" value="display quotes">
+	</form>
+	<form action="{{url_for('home')}}" method = "GET">
+		<input type="submit" value="Shome">
+	</form>
+
+
+
+
+</body>

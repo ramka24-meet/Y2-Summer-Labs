@@ -1,0 +1,19 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<title>Fortune teller</title>
+</head>
+<body>
+
+	<h1>Thank you for your quote</h1>
+	{%for i in quotes%}
+	<h1>{{i}}</h1>
+	{%endfor%}
+	<form action="{{url_for('home')}}" method = "GET">
+		<input type="submit" value="home">
+	</form>
+
+
+
+
+</body>
