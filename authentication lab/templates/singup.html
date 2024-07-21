@@ -1,0 +1,18 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<title>Fortune teller</title>
+</head>
+<body>
+
+	<h1>Enter your email and password</h1>
+	<form action="/" method = "POST">
+		<input type="text" name = "email" placeholder="email">
+		<input type="text" name = "password" placeholder="password">
+		<input type="submit" value="login">
+	</form>
+	<h2><a href="{{url_for('singIn')}}">Already have an account</a></h2>
+
+
+
+</body>
