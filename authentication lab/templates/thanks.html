@@ -3,16 +3,16 @@
 <head>
 	<title>Fortune teller</title>
 </head>
-<body>
+<body style="background-color: pink; ">
 
-	<h1>Thank you for your quote</h1>
-	<h1>{{speaker}} : {{quote}}</h1>
+	<h1 style="font-size: 60px; text-align: center;">Thank you for your quote</h1>
+	<h1 style="font-size: 60px; text-align: center;">{{speaker}} : {{quote}}</h1>
 
-	<form action="{{url_for('display')}}" method = "GET">
+	<form style="size: 60px; text-align: center;" action="{{url_for('display')}}" method = "GET">
 		<input type="submit" value="display quotes">
 	</form>
-	<form action="{{url_for('home')}}" method = "GET">
-		<input type="submit" value="Shome">
+	<form style="size: 60px; text-align: center;" action="{{url_for('home')}}" method = "GET">
+		<input type="submit" value="home">
 	</form>
 
 

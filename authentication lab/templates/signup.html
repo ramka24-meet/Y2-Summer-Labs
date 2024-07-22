@@ -3,13 +3,16 @@
 <head>
 	<title>Fortune teller</title>
 </head>
-<body>
+<body style="background-color: pink;"
 
 	<h1>Enter your email and password</h1>
-	<form action="/" method = "POST">
+	<form style="font-size: 60px; text-align: center;" action="/" method = "POST">
 		<input type="text" name = "email" placeholder="email">
 		<input type="text" name = "password" placeholder="password">
-		<input type="submit" value="sing up">
+		<input type="text" name = "username" placeholder="username">
+		<input type="text" name = "full_name" placeholder="full name">
+
+		<input type="submit" value="sign up">
 	</form>
 	<h2><a href="{{url_for('signIn')}}">Already have an account</a></h2>
 

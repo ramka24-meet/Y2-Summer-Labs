@@ -3,13 +3,13 @@
 <head>
 	<title>Fortune teller</title>
 </head>
-<body>
+<body style="background-color: pink;">
 
-	<h1>Thank you for your quote</h1>
+	<h1 style="font-size: 60px; text-align: center;">Quotes</h1>
 	{%for i in quotes%}
-	<h1>{{i + " : " +  quotes[i]}}</h1>
+	<h1 style="font-size: 40px; text-align: center;">{{quotes[i]['said_by'] + " : " +quotes[i]['quote']  }}</h1>
 	{%endfor%}
-	<form action="{{url_for('home')}}" method = "GET">
+	<form style="font-size: 60px; text-align: center;" action="{{url_for('home')}}" method = "GET">
 		<input type="submit" value="home">
 	</form>
 
