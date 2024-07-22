@@ -32,11 +32,11 @@ def signUp():
 		try:
 			print("hello")
 			session['user'] = auth.create_user_with_email_and_password(email, password)
-			session['quote'] = ""
-			session['quotes'] = []
+			session['quotes'] = {}
 			return redirect(url_for('home'))
 		except:
 			error = "Authentication failed"
+			return redirect(url_for("error"))
 	return render_template("signup.html")
 
 
@@ -47,37 +47,45 @@ def signIn():
 		password = request.form['password']
 		try:
 			session['user'] = auth.sign_in_with_email_and_password(email, password)
-			session['quote'] = ""
-			session['quotes'] = []
+			session['quotes'] = {}
 			return redirect(url_for('home'))
 		except:
 			error = "Authentication failed"
+			return redirect(url_for("error"))
 	return render_template("signin.html")
 @app.route('/home', methods = ['GET','POST'])
 def home():
 	if request.method == 'POST':
-		print(session['quote'])
 		quote = request.form['quote']
-		session['quote'] = quote
+		speaker = request.form['speaker']
+		session['quotes'][speaker] = quote
+		session['speaker'] = speaker
+		session.modified = True
 		return redirect(url_for('thanks'))
 	return render_template('home.html')
 @app.route('/display')
 def display():
-	quotes = session['quotes']
-	print(session['quotes'])
-	return render_template("display.html", quotes = quotes)
+	if session['user'] != None:
+		quotes = session['quotes']
+		print(session['quotes'])
+		return render_template("display.html", quotes = quotes)
+	else:
+		return redirect(url_for('signIn'))
 @app.route('/thanks')
 def thanks():
-	quote = session['quote']
-	session['quotes'].append(quote)
-	session.modified = True
-	print(session['quotes'])
-	return render_template("thanks.html",quote = quote)
+	if session['user'] != None:
+		speaker = session['speaker']
+		quote = session['quotes'][speaker]
+		return render_template("thanks.html",quote = quote, speaker = speaker)
+	else:
+		return redirect(url_for('signIn'))
 @app.route('/sign-out')
 def signOut():
 	session['user']=None
 	auth.current_user = None
 	return redirect(url_for('signIn'))
-
+@app.route('/error.html')
+def error():
+	return render_template('error.html')
 if __name__ == '__main__':
     app.run(debug=True)
