@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Akinator</title>
+    <script>
+        function submitForm() {
+            document.getElementById('akinatorForm').submit();
+        }
+    </script>
+</head>
+<body>
+	<h1>Answer the question</h1>
+	<h1>{{response}}</h1>
+    <form id="akinatorForm" action="{{ url_for('akinator') }}" method="POST">
+        <input type="radio" name="akinator" value="yes" onclick="submitForm()">yes<br>
+        <input type="radio" name="akinator" value="probably" onclick="submitForm()">probably<br>
+        <input type="radio" name="akinator" value="I don't know" onclick="submitForm()">I don't know<br>
+        <input type="radio" name="akinator" value="probably not" onclick="submitForm()">probably not<br>
+        <input type="radio" name="akinator" value="no" onclick="submitForm()">no<br>
+    </form>
+</body>
+</html>

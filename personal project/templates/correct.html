@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Akinator</title>
+    <script>
+        function submitForm() {
+            document.getElementById('akinatorForm').submit();
+        }
+    </script>
+</head>
+<body>
+	<h1></h1>
+    <form action = '{{url_for("home")}}' method = 'GET'>
+        <input type="submit" value="Go home">
+    </form>
+    <form action = '{{url_for("akinator")}}' method = 'GET'>
+        <input type="submit" value="Go home">
+    </form>
+	<h2></h2>
+</body>
+</html>
