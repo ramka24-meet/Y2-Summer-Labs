@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Akinator</title>
+    <link rel="stylesheet" href="../static/akinator.css">
     <script>
         function submitForm() {
             document.getElementById('akinatorForm').submit();
@@ -9,14 +10,27 @@
     </script>
 </head>
 <body>
-	<h1>Answer the question</h1>
-	<h1>{{response}}</h1>
-    <form id="akinatorForm" action="{{ url_for('akinator') }}" method="POST">
-        <input type="radio" name="akinator" value="yes" onclick="submitForm()">yes<br>
-        <input type="radio" name="akinator" value="probably" onclick="submitForm()">probably<br>
-        <input type="radio" name="akinator" value="I don't know" onclick="submitForm()">I don't know<br>
-        <input type="radio" name="akinator" value="probably not" onclick="submitForm()">probably not<br>
-        <input type="radio" name="akinator" value="no" onclick="submitForm()">no<br>
-    </form>
+    <div class="container">
+        <h1>Answer the question</h1>
+        <h2>{{response}}</h2>
+        <form id="akinatorForm" action="{{ url_for('akinator') }}" method="POST">
+            <div class="button-group">
+                <input type="radio" id="yes" name="akinator" value="yes" onclick="submitForm()" hidden>
+                <label for="yes" class="button">Yes</label>
+                
+                <input type="radio" id="probably" name="akinator" value="probably" onclick="submitForm()" hidden>
+                <label for="probably" class="button">Probably</label>
+                
+                <input type="radio" id="idk" name="akinator" value="I don't know" onclick="submitForm()" hidden>
+                <label for="idk" class="button">I don't know</label>
+                
+                <input type="radio" id="probably_not" name="akinator" value="probably not" onclick="submitForm()" hidden>
+                <label for="probably_not" class="button">Probably Not</label>
+                
+                <input type="radio" id="no" name="akinator" value="no" onclick="submitForm()" hidden>
+                <label for="no" class="button">No</label>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

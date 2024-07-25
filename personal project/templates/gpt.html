@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ram GPT</title>
+    <link rel="stylesheet" type="text/css" href="../static/gpt.css">
+</head>
+<body>
+    <div class="container">
+        <div class="chat-history" id="chat-history">
+          <h2>Chat History</h2>
+        <form action = '{{url_for("set_conversation_id")}}' method = 'POST'>
+            {% for chat in chats %}
+                <form method="POST" action="{{ url_for('set_conversation_id') }}" class="chat-form">
+                    <input type="hidden" name="conversation_id" value="{{ loop.revindex0 }}">
+                    <button type="submit" class="chat-item">
+                        <span>{{ chat.keys() | first }}</span>
+                    </button>
+                </form>
+            {% endfor %}
+        </form>
+        </div>
+        <div class="chat-area">
+            <div class="chat-box">
+                {% for prompt in prompts %}
+                    <div class="message user">
+                        <p>{{ "you: " ~ prompt }}</p>
+                    </div>
+                    <div class="message bot">
+                        <p>{{ "Gemini: " ~ prompts[prompt] }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <form action="{{ url_for('gpt') }}" method="POST" class="input-container">
+                <input type="text" name="prompt" placeholder="Enter your prompt">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

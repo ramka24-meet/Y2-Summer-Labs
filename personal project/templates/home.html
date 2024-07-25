@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home</title>
-</head>	
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
 <body>
-	<h1>Pick a location</h1>
-	<h2><a href = '{{url_for("scribble")}}'>Scribble</a></h2>
-	<h2><a href = '{{url_for("akinator")}}'>Akinator</a></h2>
-	<h2><a href = '{{url_for("gpt")}}'>Chat Bot</a></h2>
-	<h2><a href = '{{url_for("profile")}}'>profile</a></h2>
+    <h1>Pick a location</h1>
+    <div class="button-container">
+        <a href="{{url_for('akinator')}}" class="category-button">Akinator</a>
+        <a href="{{url_for('gpt')}}" class="category-button">Chat Bot</a>
+    </div>
+    <div class="signout-container">
+        <a href="{{url_for('signOut')}}" class="signout-button">Sign Out</a>
+    </div>
 </body>
 </html>

@@ -2,20 +2,24 @@
 <html>
 <head>
     <title>Akinator</title>
-    <script>
-        function submitForm() {
-            document.getElementById('akinatorForm').submit();
-        }
-    </script>
+    <link rel="stylesheet" href="../static/correct.css">
 </head>
 <body>
-	<h1></h1>
-    <form action = '{{url_for("home")}}' method = 'GET'>
-        <input type="submit" value="Go home">
-    </form>
-    <form action = '{{url_for("akinator")}}' method = 'GET'>
-        <input type="submit" value="Go home">
-    </form>
-	<h2></h2>
+    <header>
+        <h1>Akinator</h1>
+    </header>
+    <main>
+        <div class="button-container">
+            <form action="{{url_for('home')}}" method="GET">
+                <input type="submit" value="Go Home" class="button">
+            </form>
+            <form action="{{url_for('akinator')}}" method="GET">
+                <input type="submit" value="Play Again" class="button">
+            </form>
+        </div>
+    </main>
+    <footer>
+        <h2>Have fun playing Akinator!</h2>
+    </footer>
 </body>
 </html>

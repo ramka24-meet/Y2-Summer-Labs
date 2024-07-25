@@ -31,9 +31,8 @@ def signUp():
 		email = request.form['email']
 		password = request.form['password']
 		username = request.form['username']
-		full_name = request.form['full_name']
 		try:
-			user = {'email' : email, 'username': username, 'full_name': full_name}
+			user = {'email' : email, 'username': username}
 			session['user'] = auth.create_user_with_email_and_password(email, password)
 			db.child('Users').child(session['user']['localId']).set(user)
 			return redirect(url_for('home'))

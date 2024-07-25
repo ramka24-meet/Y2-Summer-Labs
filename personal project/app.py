@@ -37,7 +37,7 @@ def signUp():
     password = request.form['password']
     username = request.form['username']
     try:
-      user = {'email' : email, 'username': username}
+      user = {'email' : email, 'username': username, 'conversation': {}}
       session['user'] = auth.create_user_with_email_and_password(email, password)
       db.child('Users').child(session['user']['localId']).set(user)
       return redirect(url_for('home'))
@@ -61,45 +61,70 @@ def signIn():
 
 @app.route('/home', methods = ['GET', 'POST'])
 def home():
+  try:
+    session['conversationId'] = str(len(db.child('Users').child(session['user']['localId']).child('conversation').get().val()))
+    session['conversation'] = {}
+  except:
+    session['conversationId'] = 0
+    session['conversation'] = {}
+
   return render_template('home.html')
-@app.route('/scribble', methods = ['GET', 'POST'])
-def scribble():
-  return render_template("scribble.html")
 
 @app.route('/akinator', methods = ['GET', 'POST'])
 def akinator():
   if request.method == 'GET':
     response = akinator_chat.send_message("""
 You are Akinator, a genius that can guess any character a user is thinking of by asking a series of specific questions.
-Your goal is to ask targeted questions that help you identify the character. minimize asking about specific shows or unrelated topics,
+Your goal is to ask targeted questions that help you identify the character.
 and focus only on attributes and traits of the character. Dont be afraid to guess the character without being 100 precent sure
-Ask only yes or no questions and do not repeat questions.
+Ask only yes or no questions and do not repeat questions. also do not make your question slightly different if you get many no's change the subject of the questions. no 2 questions should be similar 
 
-Examples of good questions:
-1. Is the character real?
-2. Is the character human?
-3. Is the character male?
-4. Is the character from a movie?
-5. Does the character have magical powers?
+Start with these questions ask them one at a time:
+Is the character real? 
+Is the character human? 
+Is the character male?
+examples of good questions:
 
-
+1. Is the character from a movie?
+2. Does the character have magical powers?
+3. Is your character a celebrity
+ONLY RESPOND WITH QUESTIONS
+DONT REPEAT QUESTIONS
+IF YOUR GUESS IS CORRECT ONLY RESPOND WITH CORRECT
 Begin your questioning now:
 """)
     return render_template("akinator.html", response = response.text)
   if request.method == 'POST':
     picked_option = request.form.get('akinator')
     response = akinator_chat.send_message(picked_option).text
-    if response == 'GUESS':
+    if '?' not in response:
       return render_template('correct.html')
     return render_template("akinator.html", response = response)
 @app.route('/gpt', methods = ['GET', 'POST'])
 def gpt():
-  return render_template("gpt.html")
-
-@app.route('/profile', methods = ['GET', 'POST'])
-def profile():
-  return render_template("profile.html")
-
+  if request.method == 'POST':
+    prompt = request.form['prompt']
+    session
+    response = gpt_chat.send_message(prompt).text
+    session['conversation'][prompt] = response
+    print(session['conversation'])
+    session.modified = True
+    db.child('Users').child(session['user']['localId']).child('conversation').child(session['conversationId']).set(session['conversation'])
+  try:
+    return render_template('gpt.html', prompts = session['conversation'], chats = db.child('Users').child(session['user']['localId']).child('conversation').get().val()[::-1] )
+  except:
+    return render_template('gpt.html', prompts = session['conversation'], chats = {} )
+@app.route('/gpt-history', methods = ['GET','POST'])
+def set_conversation_id():
+    conversation_id = request.form['conversation_id']
+    session['conversationId'] = conversation_id
+    session['conversation'] = db.child('Users').child(session['user']['localId']).child('conversation').child(session['conversationId']).get().val()
+    return redirect(url_for('gpt'))
+@app.route('/signO-out',methods = ['GET', 'POST'])
+def signOut():
+  session['user'] = None
+  auth.current_user = None
+  return redirect(url_for("signIn"))
 @app.route('/error',methods = ['GET', 'POST'])
 def error():
   return render_template("error.html")
